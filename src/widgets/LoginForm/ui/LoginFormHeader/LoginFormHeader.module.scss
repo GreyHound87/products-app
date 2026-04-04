@@ -17,6 +17,8 @@
   border-radius: 50%;
   border: 1px solid transparent;
   background:
-    linear-gradient(to bottom, var(--ant-color-bg-layout), var(--ant-color-bg-container) 50%) padding-box,
-    linear-gradient(to bottom, var(--ant-color-border-secondary), var(--ant-color-bg-container)) border-box;
+    linear-gradient(to bottom, var(--ant-color-bg-layout), var(--ant-color-bg-container) 50%)
+      padding-box,
+    linear-gradient(to bottom, var(--ant-color-border-secondary), var(--ant-color-bg-container))
+      border-box;
 }

@@ -72,13 +72,7 @@ export default defineConfig([
       'import-x/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'type',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'type'],
           pathGroups: [
             { pattern: 'react', group: 'external', position: 'before' },
             { pattern: 'react-*', group: 'external', position: 'before' },
