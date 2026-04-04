@@ -1,5 +1,6 @@
-import { App as AntdApp, ConfigProvider } from 'antd';
-import { AppRouterProvider } from './providers/AppRouterProvider';
+import { App as AntdApp, ConfigProvider } from 'antd'
+
+import { AppRouterProvider } from './providers/AppRouterProvider'
 
 export const App = () => {
   return (
@@ -8,5 +9,5 @@ export const App = () => {
         <AppRouterProvider />
       </AntdApp>
     </ConfigProvider>
-  );
-};
+  )
+}
