@@ -1,7 +1,9 @@
 import { Button, Divider, Flex, Form, Typography } from 'antd'
 
+import styles from './LoginFormActions.module.scss'
+
 const LoginFormActions = () => (
-  <>
+  <div className={styles.actions}>
     <Form.Item>
       <Button type='primary' htmlType='submit' block>
         Войти
@@ -9,20 +11,17 @@ const LoginFormActions = () => (
     </Form.Item>
 
     <Divider plain>
-      <Typography.Text type='secondary' style={{ fontSize: 16, fontWeight: 500 }}>
+      <Typography.Text type='secondary' className={styles.dividerText}>
         или
       </Typography.Text>
     </Divider>
 
     <Flex justify='center'>
-      <Typography.Text style={{ fontSize: 18, fontWeight: 400 }}>
-        Нет аккаунта?{' '}
-        <Typography.Link style={{ fontSize: 18, fontWeight: 600, textDecoration: 'underline' }}>
-          Создать
-        </Typography.Link>
+      <Typography.Text className={styles.accountText}>
+        Нет аккаунта? <Typography.Link className={styles.createLink}>Создать</Typography.Link>
       </Typography.Text>
     </Flex>
-  </>
+  </div>
 )
 
 export default LoginFormActions

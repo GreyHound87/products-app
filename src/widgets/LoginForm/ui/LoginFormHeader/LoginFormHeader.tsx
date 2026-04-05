@@ -12,13 +12,10 @@ const LoginFormHeader = () => (
       </Flex>
     </Flex>
 
-    <Typography.Title
-      level={2}
-      style={{ margin: 0, fontSize: 40, fontWeight: 600, letterSpacing: '-0.015em' }}
-    >
+    <Typography.Title level={2} className={styles.title}>
       Добро пожаловать!
     </Typography.Title>
-    <Typography.Text type='secondary' style={{ fontSize: 18, fontWeight: 500 }}>
+    <Typography.Text type='secondary' className={styles.subtitle}>
       Пожалуйста, авторизируйтесь
     </Typography.Text>
   </Flex>
