@@ -9,3 +9,8 @@ export async function loginApi(username: string, password: string): Promise<Auth
     body: JSON.stringify({ username, password }),
   })
 }
+
+export function saveToken(token: string, remember: boolean): void {
+  const storage = remember ? localStorage : sessionStorage
+  storage.setItem('auth_token', token)
+}
