@@ -1,9 +1,23 @@
+$wrapper-padding: 6px;
+$wrapper-border-radius: 40px;
+
 .wrapper {
   width: 100%;
   max-width: 527px;
-  padding: 6px;
-  border-radius: 40px;
+  padding: $wrapper-padding;
+  border-radius: $wrapper-border-radius;
   background: var(--ant-color-bg-container);
+}
+
+.wrapper .card {
+  width: 100%;
+  border-radius: $wrapper-border-radius - $wrapper-padding;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(to bottom, var(--ant-color-bg-layout), var(--ant-color-bg-container) 50%)
+      padding-box,
+    linear-gradient(to bottom, var(--ant-color-border-secondary), var(--ant-color-bg-container) 50%)
+      border-box;
 }
 
 .cardBody {

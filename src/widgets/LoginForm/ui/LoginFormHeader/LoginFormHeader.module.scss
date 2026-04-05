@@ -2,6 +2,18 @@
   margin-bottom: var(--ant-margin-lg);
 }
 
+.header .title {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.header .subtitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .logoOuter {
   width: 56px;
   height: 56px;
