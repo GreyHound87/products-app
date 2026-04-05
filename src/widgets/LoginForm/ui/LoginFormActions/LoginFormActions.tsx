@@ -2,10 +2,14 @@ import { Button, Divider, Flex, Form, Typography } from 'antd'
 
 import styles from './LoginFormActions.module.scss'
 
-const LoginFormActions = () => (
+interface LoginFormActionsProps {
+  loading?: boolean
+}
+
+const LoginFormActions = ({ loading }: LoginFormActionsProps) => (
   <div className={styles.actions}>
     <Form.Item>
-      <Button type='primary' htmlType='submit' block>
+      <Button type='primary' htmlType='submit' block loading={loading}>
         Войти
       </Button>
     </Form.Item>
