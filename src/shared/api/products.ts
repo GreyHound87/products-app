@@ -10,7 +10,10 @@ export interface GetProductsParams {
   search?: string
 }
 
-export async function getProducts(params: GetProductsParams = {}): Promise<ProductsResponse> {
+export async function getProducts(
+  params: GetProductsParams = {},
+  signal?: AbortSignal,
+): Promise<ProductsResponse> {
   const isSearch = Boolean(params.search)
   const basePath = isSearch ? '/products/search' : '/products'
 
@@ -22,5 +25,8 @@ export async function getProducts(params: GetProductsParams = {}): Promise<Produ
   if (!isSearch && params.order) query.set('order', params.order)
 
   const qs = query.toString()
-  return apiFetch<ProductsResponse>(qs ? `${basePath}?${qs}` : basePath)
+  return apiFetch<ProductsResponse>(
+    qs ? `${basePath}?${qs}` : basePath,
+    signal ? { signal } : undefined,
+  )
 }
