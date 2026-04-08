@@ -5,52 +5,41 @@ import { useSearchParams } from 'react-router-dom'
 import { Alert, Flex, Table } from 'antd'
 
 import type { Product } from '@/shared/api/types'
-import type { SortOrder } from '@/shared/constants/sortOrder'
 
 import { useProducts } from './hooks/useProducts'
 import styles from './ProductsTable.module.scss'
 import { AddProductModal } from './ui/AddProductModal'
-import { columns } from './ui/columns'
+import { getProductsTableColumns } from './ui/columns'
 import { ProductsPaginationTotal } from './ui/ProductsPaginationTotal'
 import { ProductsToolbar } from './ui/ProductsToolbar'
 import { getProductsTableOnChange } from './utils/getProductsTableOnChange'
+import { parseProductsListParams } from './utils/parseProductsListParams'
 
 const PAGE_SIZE = 20
 
 export const ProductsTable = () => {
-  const [searchParams] = useSearchParams()
-  const search = searchParams.get('q') ?? ''
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const { q, page, sortBy, order } = parseProductsListParams(searchParams)
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([])
   const [addModalOpen, setAddModalOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [sortBy, setSortBy] = useState<string | undefined>()
-  const [order, setOrder] = useState<SortOrder | undefined>()
-  // https://react.dev/reference/react/useState#storing-information-from-previous-renders
-  const [searchSnapshot, setSearchSnapshot] = useState(search)
 
-  if (search !== searchSnapshot) {
-    setSearchSnapshot(search)
-    setCurrentPage(1)
-  }
-
-  const pageForHook = search !== searchSnapshot ? 1 : currentPage
+  const columns = getProductsTableColumns({ sortBy, order })
 
   const { products, total, loading, error, refetch, activePage, appliedSearch } = useProducts({
-    search,
+    search: q,
     sortBy,
     order,
-    page: pageForHook,
+    page,
     limit: PAGE_SIZE,
   })
 
   const handleChange = getProductsTableOnChange({
     activePage,
-    setCurrentPage,
     sortBy,
     order,
-    setSortBy,
-    setOrder,
+    setSearchParams,
   })
 
   if (error) {

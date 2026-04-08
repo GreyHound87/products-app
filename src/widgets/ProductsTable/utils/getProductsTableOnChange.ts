@@ -1,3 +1,5 @@
+import type { SetURLSearchParams } from 'react-router-dom'
+
 import type { TableProps } from 'antd'
 
 import type { Product } from '@/shared/api/types'
@@ -5,36 +7,47 @@ import { SORT_ORDER, type SortOrder } from '@/shared/constants/sortOrder'
 
 export interface GetProductsTableOnChangeParams {
   activePage: number
-  setCurrentPage: (page: number) => void
   sortBy: string | undefined
   order: SortOrder | undefined
-  setSortBy: (field: string | undefined) => void
-  setOrder: (order: SortOrder | undefined) => void
+  setSearchParams: SetURLSearchParams
 }
 
 export function getProductsTableOnChange({
   activePage,
-  setCurrentPage,
   sortBy,
   order,
-  setSortBy,
-  setOrder,
+  setSearchParams,
 }: GetProductsTableOnChangeParams): TableProps<Product>['onChange'] {
   return (pagination, _filters, sorter) => {
-    if (pagination.current != null && pagination.current !== activePage) {
-      setCurrentPage(pagination.current)
-    }
-
     const s = Array.isArray(sorter) ? sorter[0] : sorter
     const dir =
       s.order === 'ascend' ? SORT_ORDER.ASC : s.order === 'descend' ? SORT_ORDER.DESC : undefined
     const nextSortBy = dir ? (s.field as string) : undefined
     const nextOrder = dir
 
-    if (nextSortBy !== sortBy || nextOrder !== order) {
-      setSortBy(nextSortBy)
-      setOrder(nextOrder)
-      setCurrentPage(1)
-    }
+    const sortChanged = nextSortBy !== sortBy || nextOrder !== order
+
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+
+        if (sortChanged) {
+          if (nextSortBy && nextOrder) {
+            next.set('sortBy', nextSortBy)
+            next.set('order', nextOrder)
+          } else {
+            next.delete('sortBy')
+            next.delete('order')
+          }
+          next.delete('page')
+        } else if (pagination.current != null && pagination.current !== activePage) {
+          if (pagination.current <= 1) next.delete('page')
+          else next.set('page', String(pagination.current))
+        }
+
+        return next
+      },
+      { replace: true },
+    )
   }
 }

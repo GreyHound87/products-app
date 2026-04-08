@@ -23,8 +23,8 @@ export async function getProducts(
   if (params.search) query.set('q', params.search)
   if (params.limit) query.set('limit', String(params.limit))
   if (params.skip) query.set('skip', String(params.skip))
-  if (!isSearch && params.sortBy) query.set('sortBy', params.sortBy)
-  if (!isSearch && params.order) query.set('order', params.order)
+  if (params.sortBy) query.set('sortBy', params.sortBy)
+  if (params.order) query.set('order', params.order)
 
   const qs = query.toString()
   return apiFetch<ProductsResponse>(

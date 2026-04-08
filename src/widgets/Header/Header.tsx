@@ -31,6 +31,7 @@ export const Header = () => {
         } else {
           next.delete('q')
         }
+        next.delete('page')
         return next
       },
       { replace: true },
