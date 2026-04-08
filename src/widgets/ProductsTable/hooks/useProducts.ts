@@ -20,6 +20,7 @@ export interface UseProductsResult {
   error: string | null
   refetch: () => void
   activePage: number
+  appliedSearch: string
 }
 
 export function useProducts({
@@ -77,5 +78,13 @@ export function useProducts({
     setEpoch((e) => e + 1)
   }
 
-  return { products, total, loading, error, refetch, activePage: effectivePage }
+  return {
+    products,
+    total,
+    loading,
+    error,
+    refetch,
+    activePage: effectivePage,
+    appliedSearch: debouncedSearch,
+  }
 }

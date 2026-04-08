@@ -2,13 +2,14 @@ import { useState, type Key } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { Alert, Table, type TableProps } from 'antd'
+import { Alert, Flex, Table, type TableProps } from 'antd'
 
 import type { Product } from '@/shared/api/types'
 import { SORT_ORDER, type SortOrder } from '@/shared/constants/sortOrder'
 
 import { useProducts } from './hooks/useProducts'
 import { columns } from './ui/columns'
+import { ProductsToolbar } from './ui/ProductsToolbar'
 
 const PAGE_SIZE = 20
 
@@ -30,7 +31,7 @@ export const ProductsTable = () => {
 
   const pageForHook = search !== searchSnapshot ? 1 : currentPage
 
-  const { products, total, loading, error, activePage } = useProducts({
+  const { products, total, loading, error, refetch, activePage, appliedSearch } = useProducts({
     search,
     sortBy,
     order,
@@ -61,23 +62,35 @@ export const ProductsTable = () => {
   }
 
   return (
-    <Table<Product>
-      columns={columns}
-      dataSource={products}
-      rowKey='id'
-      loading={loading}
-      onChange={handleChange}
-      pagination={{
-        current: activePage,
-        pageSize: PAGE_SIZE,
-        total,
-        showSizeChanger: false,
-      }}
-      rowSelection={{
-        columnWidth: 40,
-        selectedRowKeys,
-        onChange: setSelectedRowKeys,
-      }}
-    />
+    <Flex vertical gap={40}>
+      <ProductsToolbar
+        appliedSearchQuery={appliedSearch}
+        onRefresh={refetch}
+        refreshLoading={loading}
+      />
+      <Table<Product>
+        columns={columns}
+        dataSource={products}
+        rowKey='id'
+        loading={loading}
+        onChange={handleChange}
+        styles={{
+          pagination: {
+            root: { marginTop: 40 },
+          },
+        }}
+        pagination={{
+          current: activePage,
+          pageSize: PAGE_SIZE,
+          total,
+          showSizeChanger: false,
+        }}
+        rowSelection={{
+          columnWidth: 40,
+          selectedRowKeys,
+          onChange: setSelectedRowKeys,
+        }}
+      />
+    </Flex>
   )
 }
