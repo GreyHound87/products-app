@@ -2,16 +2,18 @@ import { useState, type Key } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { Alert, Flex, Table, Typography, type TableProps } from 'antd'
+import { Alert, Flex, Table } from 'antd'
 
 import type { Product } from '@/shared/api/types'
-import { SORT_ORDER, type SortOrder } from '@/shared/constants/sortOrder'
+import type { SortOrder } from '@/shared/constants/sortOrder'
 
 import { useProducts } from './hooks/useProducts'
 import styles from './ProductsTable.module.scss'
+import { AddProductModal } from './ui/AddProductModal'
 import { columns } from './ui/columns'
+import { ProductsPaginationTotal } from './ui/ProductsPaginationTotal'
 import { ProductsToolbar } from './ui/ProductsToolbar'
-
+import { getProductsTableOnChange } from './utils/getProductsTableOnChange'
 
 const PAGE_SIZE = 20
 
@@ -20,6 +22,7 @@ export const ProductsTable = () => {
   const search = searchParams.get('q') ?? ''
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([])
+  const [addModalOpen, setAddModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [sortBy, setSortBy] = useState<string | undefined>()
   const [order, setOrder] = useState<SortOrder | undefined>()
@@ -41,26 +44,28 @@ export const ProductsTable = () => {
     limit: PAGE_SIZE,
   })
 
-  const handleChange: TableProps<Product>['onChange'] = (pagination, _filters, sorter) => {
-    if (pagination.current != null && pagination.current !== activePage) {
-      setCurrentPage(pagination.current)
-    }
-
-    const s = Array.isArray(sorter) ? sorter[0] : sorter
-    const dir =
-      s.order === 'ascend' ? SORT_ORDER.ASC : s.order === 'descend' ? SORT_ORDER.DESC : undefined
-    const nextSortBy = dir ? (s.field as string) : undefined
-    const nextOrder = dir
-
-    if (nextSortBy !== sortBy || nextOrder !== order) {
-      setSortBy(nextSortBy)
-      setOrder(nextOrder)
-      setCurrentPage(1)
-    }
-  }
+  const handleChange = getProductsTableOnChange({
+    activePage,
+    setCurrentPage,
+    sortBy,
+    order,
+    setSortBy,
+    setOrder,
+  })
 
   if (error) {
     return <Alert type='error' title={error} />
+  }
+
+  const pagination = {
+    current: activePage,
+    pageSize: PAGE_SIZE,
+    total,
+    showSizeChanger: false,
+    className: styles.paginationBar,
+    showTotal(allCount: number, pageRange: [number, number]) {
+      return <ProductsPaginationTotal total={allCount} range={pageRange} />
+    },
   }
 
   return (
@@ -69,6 +74,15 @@ export const ProductsTable = () => {
         appliedSearchQuery={appliedSearch}
         onRefresh={refetch}
         refreshLoading={loading}
+        onAdd={() => {
+          setAddModalOpen(true)
+        }}
+      />
+      <AddProductModal
+        open={addModalOpen}
+        onClose={() => {
+          setAddModalOpen(false)
+        }}
       />
       <Table<Product>
         columns={columns}
@@ -81,21 +95,7 @@ export const ProductsTable = () => {
             root: { marginTop: 40, width: '100%', justifyContent: 'flex-start' },
           },
         }}
-        pagination={{
-          current: activePage,
-          pageSize: PAGE_SIZE,
-          total,
-          showSizeChanger: false,
-          className: styles.paginationBar,
-          showTotal: (all, [from, to]) => (
-            <Typography.Text>
-              <Typography.Text type='secondary'>Показано </Typography.Text>
-              {all === 0 ? '0' : `${String(from)}-${String(to)}`}
-              <Typography.Text type='secondary'> из </Typography.Text>
-              {all}
-            </Typography.Text>
-          ),
-        }}
+        pagination={pagination}
         rowSelection={{
           columnWidth: 40,
           selectedRowKeys,

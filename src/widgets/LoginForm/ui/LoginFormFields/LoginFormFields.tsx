@@ -2,13 +2,15 @@ import { Checkbox, Form, Input, Typography } from 'antd'
 
 import { CloseOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 
+import { FormFieldLabel } from '@/shared/ui/FormFieldLabel'
+
 import styles from './LoginFormFields.module.scss'
 
 const LoginFormFields = () => (
   <>
     <Form.Item
       name='username'
-      label={<span className={styles.label}>Логин</span>}
+      label={<FormFieldLabel>Логин</FormFieldLabel>}
       rules={[{ required: true, message: 'Введите логин' }]}
     >
       <Input
@@ -20,7 +22,7 @@ const LoginFormFields = () => (
 
     <Form.Item
       name='password'
-      label={<span className={styles.label}>Пароль</span>}
+      label={<FormFieldLabel>Пароль</FormFieldLabel>}
       rules={[{ required: true, message: 'Введите пароль' }]}
     >
       <Input.Password prefix={<LockOutlined />} placeholder='Введите пароль' />
