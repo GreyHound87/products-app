@@ -2,14 +2,16 @@ import { useState, type Key } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { Alert, Flex, Table, type TableProps } from 'antd'
+import { Alert, Flex, Table, Typography, type TableProps } from 'antd'
 
 import type { Product } from '@/shared/api/types'
 import { SORT_ORDER, type SortOrder } from '@/shared/constants/sortOrder'
 
 import { useProducts } from './hooks/useProducts'
+import styles from './ProductsTable.module.scss'
 import { columns } from './ui/columns'
 import { ProductsToolbar } from './ui/ProductsToolbar'
+
 
 const PAGE_SIZE = 20
 
@@ -76,7 +78,7 @@ export const ProductsTable = () => {
         onChange={handleChange}
         styles={{
           pagination: {
-            root: { marginTop: 40 },
+            root: { marginTop: 40, width: '100%', justifyContent: 'flex-start' },
           },
         }}
         pagination={{
@@ -84,6 +86,15 @@ export const ProductsTable = () => {
           pageSize: PAGE_SIZE,
           total,
           showSizeChanger: false,
+          className: styles.paginationBar,
+          showTotal: (all, [from, to]) => (
+            <Typography.Text>
+              <Typography.Text type='secondary'>Показано </Typography.Text>
+              {all === 0 ? '0' : `${String(from)}-${String(to)}`}
+              <Typography.Text type='secondary'> из </Typography.Text>
+              {all}
+            </Typography.Text>
+          ),
         }}
         rowSelection={{
           columnWidth: 40,
