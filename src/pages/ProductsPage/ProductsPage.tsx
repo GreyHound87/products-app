@@ -1,5 +1,7 @@
+import { ProductsTable } from '@/widgets/ProductsTable'
+
 const ProductsPage = () => {
-  return <div>Products Page</div>
+  return <ProductsTable />
 }
 
 export default ProductsPage

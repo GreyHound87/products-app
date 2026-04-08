@@ -6,6 +6,8 @@ import {
   useLocation,
 } from 'react-router-dom'
 
+import AppLayout from '@/app/layouts/AppLayout'
+
 const getToken = () => localStorage.getItem('auth_token') ?? sessionStorage.getItem('auth_token')
 
 const PrivateRoute = () => {
@@ -37,8 +39,13 @@ const router = createBrowserRouter([
     Component: PrivateRoute,
     children: [
       {
-        path: '/products',
-        lazy: () => import('@/pages/ProductsPage'),
+        Component: AppLayout,
+        children: [
+          {
+            path: '/products',
+            lazy: () => import('@/pages/ProductsPage'),
+          },
+        ],
       },
     ],
   },

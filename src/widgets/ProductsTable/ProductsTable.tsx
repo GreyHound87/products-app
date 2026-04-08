@@ -1,0 +1,83 @@
+import { useState, type Key } from 'react'
+
+import { useSearchParams } from 'react-router-dom'
+
+import { Alert, Table, type TableProps } from 'antd'
+
+import type { Product } from '@/shared/api/types'
+import { SORT_ORDER, type SortOrder } from '@/shared/constants/sortOrder'
+
+import { useProducts } from './hooks/useProducts'
+import { columns } from './ui/columns'
+
+const PAGE_SIZE = 20
+
+export const ProductsTable = () => {
+  const [searchParams] = useSearchParams()
+  const search = searchParams.get('q') ?? ''
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [sortBy, setSortBy] = useState<string | undefined>()
+  const [order, setOrder] = useState<SortOrder | undefined>()
+  // https://react.dev/reference/react/useState#storing-information-from-previous-renders
+  const [searchSnapshot, setSearchSnapshot] = useState(search)
+
+  if (search !== searchSnapshot) {
+    setSearchSnapshot(search)
+    setCurrentPage(1)
+  }
+
+  const pageForHook = search !== searchSnapshot ? 1 : currentPage
+
+  const { products, total, loading, error, activePage } = useProducts({
+    search,
+    sortBy,
+    order,
+    page: pageForHook,
+    limit: PAGE_SIZE,
+  })
+
+  const handleChange: TableProps<Product>['onChange'] = (pagination, _filters, sorter) => {
+    if (pagination.current != null && pagination.current !== activePage) {
+      setCurrentPage(pagination.current)
+    }
+
+    const s = Array.isArray(sorter) ? sorter[0] : sorter
+    const dir =
+      s.order === 'ascend' ? SORT_ORDER.ASC : s.order === 'descend' ? SORT_ORDER.DESC : undefined
+    const nextSortBy = dir ? (s.field as string) : undefined
+    const nextOrder = dir
+
+    if (nextSortBy !== sortBy || nextOrder !== order) {
+      setSortBy(nextSortBy)
+      setOrder(nextOrder)
+      setCurrentPage(1)
+    }
+  }
+
+  if (error) {
+    return <Alert type='error' title={error} />
+  }
+
+  return (
+    <Table<Product>
+      columns={columns}
+      dataSource={products}
+      rowKey='id'
+      loading={loading}
+      onChange={handleChange}
+      pagination={{
+        current: activePage,
+        pageSize: PAGE_SIZE,
+        total,
+        showSizeChanger: false,
+      }}
+      rowSelection={{
+        columnWidth: 40,
+        selectedRowKeys,
+        onChange: setSelectedRowKeys,
+      }}
+    />
+  )
+}

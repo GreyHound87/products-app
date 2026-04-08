@@ -1,3 +1,5 @@
+import type { SortOrder } from '@/shared/constants/sortOrder'
+
 import { apiFetch } from './client'
 
 import type { ProductsResponse } from './types'
@@ -6,7 +8,7 @@ export interface GetProductsParams {
   limit?: number
   skip?: number
   sortBy?: string
-  order?: 'asc' | 'desc'
+  order?: SortOrder
   search?: string
 }
 
