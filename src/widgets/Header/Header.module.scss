@@ -1,0 +1,18 @@
+.header {
+  background: var(--ant-color-bg-container);
+  padding-inline: 30px;
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.title {
+  margin: 0;
+}
+
+.searchInput {
+  max-width: 1023px;
+  background: var(--ant-color-fill-tertiary);
+}
+
+.searchIcon {
+  color: var(--ant-color-text-placeholder);
+}

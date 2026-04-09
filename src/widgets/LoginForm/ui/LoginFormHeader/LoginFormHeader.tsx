@@ -1,6 +1,6 @@
 import { Flex, Typography } from 'antd'
 
-import { LogoIcon } from '@/shared/ui'
+import LogoIcon from '@/shared/ui/LogoIcon'
 
 import styles from './LoginFormHeader.module.scss'
 
