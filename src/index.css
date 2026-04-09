@@ -8,3 +8,25 @@ body {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
 }
+
+.ant-checkbox-checked:not(.ant-checkbox-indeterminate)::after {
+  opacity: 0;
+  transform: rotate(45deg) scale(0) translate(-50%, -50%);
+}
+
+.ant-pagination .ant-pagination-item:not(.ant-pagination-item-active) {
+  border: 1px solid var(--ant-color-border-secondary);
+}
+
+.ant-pagination .ant-pagination-item:not(.ant-pagination-item-active) a {
+  color: var(--ant-color-text-tertiary);
+}
+
+.ant-pagination .ant-pagination-item.ant-pagination-item-active {
+  border: 1px solid transparent;
+}
+
+.ant-pagination .ant-pagination-prev:not(.ant-pagination-disabled) .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next:not(.ant-pagination-disabled) .ant-pagination-item-link {
+  color: var(--ant-color-text-tertiary);
+}

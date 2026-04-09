@@ -20,7 +20,7 @@ export const ProductsToolbar = ({
 
   return (
     <Flex justify='space-between' align='center' wrap='wrap' gap={12}>
-      <Typography.Title level={5} style={{ margin: 0 }}>
+      <Typography.Title level={4} style={{ margin: 0 }}>
         {subtitle}
       </Typography.Title>
       <Space>

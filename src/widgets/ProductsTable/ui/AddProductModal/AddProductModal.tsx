@@ -1,4 +1,4 @@
-import { App, Form, Input, InputNumber, Modal } from 'antd'
+import { App, Form, Input, InputNumber, Modal, Typography } from 'antd'
 
 import { CloseOutlined } from '@ant-design/icons'
 
@@ -35,7 +35,11 @@ export const AddProductModal = ({ open, onClose }: AddProductModalProps) => {
 
   return (
     <Modal
-      title='Добавить товар'
+      title={
+        <Typography.Title level={3} style={{ margin: 0 }}>
+          Добавить товар
+        </Typography.Title>
+      }
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}

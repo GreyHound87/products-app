@@ -2,6 +2,7 @@ import { Typography, type TableProps } from 'antd'
 
 import type { Product } from '@/shared/api/types'
 import type { SortOrder } from '@/shared/constants/sortOrder'
+import { AscIcon, DescIcon } from '@/shared/ui/SortIcons'
 
 import { sortOrderToAntd } from '../utils/sortOrderToAntd'
 import { ActionsCell } from './ActionsCell/ActionsCell'
@@ -12,6 +13,14 @@ import { RatingCell } from './RatingCell/RatingCell'
 export interface GetProductsTableColumnsParams {
   sortBy: string | undefined
   order: SortOrder | undefined
+}
+
+function productsTableSortIcon({ sortOrder }: { sortOrder: 'ascend' | 'descend' | null }) {
+  if (sortOrder == null) return null
+  if (sortOrder === 'ascend') {
+    return <AscIcon aria-hidden />
+  }
+  return <DescIcon aria-hidden />
 }
 
 export function getProductsTableColumns({
@@ -26,6 +35,7 @@ export function getProductsTableColumns({
       dataIndex: 'title',
       key: 'title',
       sorter: true,
+      sortIcon: productsTableSortIcon,
       sortOrder: sortBy === 'title' ? activeOrder : undefined,
       render: (title: string, record: Product) => (
         <NameCell title={title} category={record.category} thumbnail={record.thumbnail} />
@@ -37,6 +47,7 @@ export function getProductsTableColumns({
       key: 'brand',
       align: 'center',
       sorter: true,
+      sortIcon: productsTableSortIcon,
       sortOrder: sortBy === 'brand' ? activeOrder : undefined,
       render: (brand: string) => <Typography.Text strong>{brand}</Typography.Text>,
     },
@@ -46,6 +57,7 @@ export function getProductsTableColumns({
       key: 'sku',
       align: 'center',
       sorter: true,
+      sortIcon: productsTableSortIcon,
       sortOrder: sortBy === 'sku' ? activeOrder : undefined,
     },
     {
@@ -54,6 +66,7 @@ export function getProductsTableColumns({
       key: 'rating',
       align: 'center',
       sorter: true,
+      sortIcon: productsTableSortIcon,
       sortOrder: sortBy === 'rating' ? activeOrder : undefined,
       render: (rating: number) => <RatingCell rating={rating} />,
     },
@@ -63,6 +76,7 @@ export function getProductsTableColumns({
       key: 'price',
       align: 'center',
       sorter: true,
+      sortIcon: productsTableSortIcon,
       sortOrder: sortBy === 'price' ? activeOrder : undefined,
       render: (price: number) => <PriceCell price={price} />,
     },

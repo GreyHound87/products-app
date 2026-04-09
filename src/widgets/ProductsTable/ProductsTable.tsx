@@ -74,14 +74,24 @@ export const ProductsTable = () => {
         }}
       />
       <Table<Product>
+        rootClassName={styles.selectionRailTable}
         columns={columns}
         dataSource={products}
         rowKey='id'
         loading={loading}
         onChange={handleChange}
+        classNames={{
+          header: {
+            cell: styles.headerCellNoDivider,
+          },
+        }}
         styles={{
-          pagination: {
-            root: { marginTop: 40, width: '100%', justifyContent: 'flex-start' },
+          header: {
+            cell: {
+              backgroundColor: 'var(--ant-color-bg-container)',
+              fontSize: 16,
+              color: 'var(--ant-color-text-description)',
+            },
           },
         }}
         pagination={pagination}
