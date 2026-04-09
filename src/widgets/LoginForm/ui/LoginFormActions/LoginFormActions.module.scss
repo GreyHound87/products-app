@@ -1,3 +1,13 @@
+.loginSubmit {
+  border: 1px solid var(--ant-color-primary);
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled),
+  &:active:not(:disabled) {
+    border-color: var(--ant-color-primary);
+  }
+}
+
 .actions .dividerText {
   font-size: 16px;
   font-weight: 500;

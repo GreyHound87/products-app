@@ -9,7 +9,13 @@ interface LoginFormActionsProps {
 const LoginFormActions = ({ loading }: LoginFormActionsProps) => (
   <div className={styles.actions}>
     <Form.Item>
-      <Button type='primary' htmlType='submit' block loading={loading}>
+      <Button
+        type='primary'
+        htmlType='submit'
+        block
+        loading={loading}
+        className={styles.loginSubmit}
+      >
         Войти
       </Button>
     </Form.Item>

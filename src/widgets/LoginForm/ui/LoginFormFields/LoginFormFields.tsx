@@ -14,7 +14,7 @@ const LoginFormFields = () => (
       rules={[{ required: true, message: 'Введите логин' }]}
     >
       <Input
-        prefix={<UserOutlined />}
+        prefix={<UserOutlined className={styles.prefixIcon} />}
         placeholder='Введите логин'
         allowClear={{ clearIcon: <CloseOutlined /> }}
       />
@@ -25,7 +25,10 @@ const LoginFormFields = () => (
       label={<FormFieldLabel>Пароль</FormFieldLabel>}
       rules={[{ required: true, message: 'Введите пароль' }]}
     >
-      <Input.Password prefix={<LockOutlined />} placeholder='Введите пароль' />
+      <Input.Password
+        prefix={<LockOutlined className={styles.prefixIcon} />}
+        placeholder='Введите пароль'
+      />
     </Form.Item>
 
     <Form.Item name='remember' valuePropName='checked'>

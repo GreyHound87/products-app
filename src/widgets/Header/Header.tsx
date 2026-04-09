@@ -41,7 +41,7 @@ export const Header = () => {
   return (
     <Layout.Header className={styles.header}>
       <Flex align='center' gap={16}>
-        <Typography.Title level={5} className={styles.title}>
+        <Typography.Title level={3} className={styles.title}>
           {title}
         </Typography.Title>
 

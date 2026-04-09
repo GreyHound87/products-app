@@ -1,3 +1,31 @@
-.paginationBar :global .ant-pagination-total-text {
-  margin-inline-end: auto;
+.selectionRailTable {
+  :global(.ant-table-tbody tr.ant-table-row-selected > .ant-table-cell:first-child) {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      width: 3px;
+      background-color: var(--app-selection-accent);
+      pointer-events: none;
+    }
+  }
+}
+
+.headerCellNoDivider {
+  &::before {
+    display: none;
+  }
+}
+
+.paginationBar {
+  margin-top: 40px;
+  width: 100%;
+  justify-content: flex-start;
+
+  :global(.ant-pagination-total-text) {
+    margin-inline-end: auto;
+  }
 }
