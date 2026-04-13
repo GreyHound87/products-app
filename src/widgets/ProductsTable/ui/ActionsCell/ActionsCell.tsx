@@ -12,7 +12,13 @@ export const ActionsCell = () => (
       icon={<PlusOutlined />}
       className={styles.addButton}
       styles={{ root: { width: 52, minWidth: 52 } }}
+      aria-label='Добавить'
     />
-    <Button shape='circle' size='small' icon={<EllipsisOutlined className={styles.moreIcon} />} />
+    <Button
+      shape='circle'
+      size='small'
+      icon={<EllipsisOutlined className={styles.moreIcon} />}
+      aria-label='Действия'
+    />
   </Flex>
 )

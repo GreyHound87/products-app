@@ -61,10 +61,10 @@ export const Header = () => {
         </Flex>
 
         <Space size={4}>
-          <Button type='text' icon={<GlobalOutlined />} />
-          <Button type='text' icon={<BellOutlined />} />
-          <Button type='text' icon={<MailOutlined />} />
-          <Button type='text' icon={<ControlOutlined />} />
+          <Button type='text' icon={<GlobalOutlined />} aria-label='Язык' />
+          <Button type='text' icon={<BellOutlined />} aria-label='Уведомления' />
+          <Button type='text' icon={<MailOutlined />} aria-label='Сообщения' />
+          <Button type='text' icon={<ControlOutlined />} aria-label='Настройки' />
         </Space>
       </Flex>
     </Layout.Header>
