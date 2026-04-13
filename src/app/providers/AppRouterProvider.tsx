@@ -6,7 +6,6 @@ import {
   useLocation,
 } from 'react-router-dom'
 
-import AppLayout from '@/app/layouts/AppLayout'
 import { hasAuthFlag } from '@/shared/api/auth'
 import { RouteErrorFallback } from '@/shared/ui/RouteErrorFallback'
 
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
         Component: PrivateRoute,
         children: [
           {
-            Component: AppLayout,
+            lazy: () => import('@/app/layouts/appLayoutRoute'),
             errorElement: <RouteErrorFallback title='Ошибка раздела' />,
             children: [
               {
