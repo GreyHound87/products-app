@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Card, Flex, Form } from 'antd'
 
-import { loginApi, saveToken } from '@/shared/api/auth'
+import { loginApi, saveAuthFlag } from '@/shared/api/auth'
 
 import styles from './LoginForm.module.scss'
 import LoginFormActions from './ui/LoginFormActions/LoginFormActions'
@@ -28,8 +28,8 @@ const LoginForm = () => {
   const onFinish = async (values: LoginFormValues) => {
     setLoading(true)
     try {
-      const { accessToken } = await loginApi(values.username, values.password)
-      saveToken(accessToken, values.remember)
+      await loginApi(values.username, values.password)
+      saveAuthFlag(values.remember)
       void navigate(from, { replace: true })
     } catch (error: unknown) {
       const message = (error as { message?: string }).message ?? 'Ошибка авторизации'
