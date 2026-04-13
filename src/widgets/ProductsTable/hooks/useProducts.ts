@@ -20,6 +20,7 @@ export interface UseProductsResult {
   error: string | null
   refetch: () => void
   activePage: number
+  /** То, что ушло в API. */
   appliedSearch: string
 }
 

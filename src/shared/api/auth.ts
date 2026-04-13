@@ -13,7 +13,9 @@ export async function loginApi(username: string, password: string): Promise<Auth
   })
 }
 
-/** Запомнить: храним только флаг. */
+/**
+ * Запомнить: храним только флаг.
+ */
 export function saveAuthFlag(remember: boolean): void {
   if (remember) {
     localStorage.setItem(AUTH_FLAG_KEY, AUTH_FLAG_VALUE)

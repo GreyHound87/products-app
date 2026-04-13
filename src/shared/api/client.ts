@@ -1,5 +1,8 @@
 const BASE_URL = 'https://dummyjson.com'
 
+/**
+ * Не кэшируется (no-store).
+ */
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     cache: 'no-store',
