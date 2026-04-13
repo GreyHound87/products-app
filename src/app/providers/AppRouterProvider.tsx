@@ -58,6 +58,11 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '*',
+        lazy: () => import('@/pages/NotFoundPage'),
+        errorElement: <RouteErrorFallback title='Ошибка страницы' />,
+      },
     ],
   },
 ])
