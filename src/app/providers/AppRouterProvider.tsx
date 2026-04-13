@@ -7,17 +7,16 @@ import {
 } from 'react-router-dom'
 
 import AppLayout from '@/app/layouts/AppLayout'
-
-const getToken = () => localStorage.getItem('auth_token') ?? sessionStorage.getItem('auth_token')
+import { hasAuthFlag } from '@/shared/api/auth'
 
 const PrivateRoute = () => {
   const location = useLocation()
-  if (!getToken()) return <Navigate to='/login' state={{ from: location }} replace />
+  if (!hasAuthFlag()) return <Navigate to='/login' state={{ from: location }} replace />
   return <Outlet />
 }
 
 const PublicRoute = () => {
-  if (getToken()) return <Navigate to='/products' replace />
+  if (hasAuthFlag()) return <Navigate to='/products' replace />
   return <Outlet />
 }
 
