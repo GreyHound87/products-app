@@ -2,6 +2,8 @@ import type { CSSProperties } from 'react'
 
 import { ConfigProvider } from 'antd'
 
+import ruRU from 'antd/locale/ru_RU'
+
 import { ErrorBoundary } from '@/shared/ui/ErrorBoundary'
 import { AppShellErrorFallback } from '@/shared/ui/ErrorBoundary/AppShellErrorFallback'
 
@@ -17,6 +19,7 @@ const appCssVars = {
 export const App = () => {
   return (
     <ConfigProvider
+      locale={ruRU}
       theme={{
         cssVar: {},
         token: {

@@ -29,7 +29,6 @@ export const ProductsToolbar = ({
           icon={<SyncOutlined />}
           onClick={onRefresh}
           loading={refreshLoading}
-          title='Обновить'
           aria-label='Обновить список товаров'
         />
         <Button type='primary' icon={<PlusCircleOutlined />} onClick={onAdd}>
