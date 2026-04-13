@@ -9,6 +9,7 @@ export interface GetProductsParams {
   skip?: number
   sortBy?: string
   order?: SortOrder
+  /** Непустой search переключает запрос на /products/search */
   search?: string
 }
 
