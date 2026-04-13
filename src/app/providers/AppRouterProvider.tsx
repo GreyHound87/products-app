@@ -8,6 +8,9 @@ import {
 
 import AppLayout from '@/app/layouts/AppLayout'
 import { hasAuthFlag } from '@/shared/api/auth'
+import { RouteErrorFallback } from '@/shared/ui/RouteErrorFallback'
+
+const RootLayout = () => <Outlet />
 
 const PrivateRoute = () => {
   const location = useLocation()
@@ -22,27 +25,37 @@ const PublicRoute = () => {
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Navigate to='/products' replace />,
-  },
-  {
-    Component: PublicRoute,
+    id: 'root',
+    Component: RootLayout,
+    errorElement: <RouteErrorFallback title='Ошибка приложения' />,
     children: [
       {
-        path: '/login',
-        lazy: () => import('@/pages/LoginPage'),
+        path: '/',
+        element: <Navigate to='/products' replace />,
       },
-    ],
-  },
-  {
-    Component: PrivateRoute,
-    children: [
       {
-        Component: AppLayout,
+        Component: PublicRoute,
         children: [
           {
-            path: '/products',
-            lazy: () => import('@/pages/ProductsPage'),
+            path: '/login',
+            lazy: () => import('@/pages/LoginPage'),
+            errorElement: <RouteErrorFallback title='Ошибка входа' />,
+          },
+        ],
+      },
+      {
+        Component: PrivateRoute,
+        children: [
+          {
+            Component: AppLayout,
+            errorElement: <RouteErrorFallback title='Ошибка раздела' />,
+            children: [
+              {
+                path: '/products',
+                lazy: () => import('@/pages/ProductsPage'),
+                errorElement: <RouteErrorFallback title='Ошибка каталога товаров' />,
+              },
+            ],
           },
         ],
       },

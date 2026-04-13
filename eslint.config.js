@@ -89,4 +89,11 @@ export default defineConfig([
       'import-x/no-cycle': 'error',
     },
   },
+
+  {
+    files: ['src/shared/ui/ErrorBoundary/ErrorBoundary.tsx'],
+    rules: {
+      'react-compiler/react-compiler': 'off',
+    },
+  },
 ])

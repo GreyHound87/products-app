@@ -2,6 +2,9 @@ import type { CSSProperties } from 'react'
 
 import { ConfigProvider } from 'antd'
 
+import { ErrorBoundary } from '@/shared/ui/ErrorBoundary'
+import { AppShellErrorFallback } from '@/shared/ui/ErrorBoundary/AppShellErrorFallback'
+
 import { AntdAppProvider } from './providers/AntdAppProvider'
 import { AppRouterProvider } from './providers/AppRouterProvider'
 import { appTheme } from './theme.tokens'
@@ -37,9 +40,11 @@ export const App = () => {
       }}
     >
       <div style={appCssVars}>
-        <AntdAppProvider>
-          <AppRouterProvider />
-        </AntdAppProvider>
+        <ErrorBoundary renderFallback={(args) => <AppShellErrorFallback {...args} />}>
+          <AntdAppProvider>
+            <AppRouterProvider />
+          </AntdAppProvider>
+        </ErrorBoundary>
       </div>
     </ConfigProvider>
   )
