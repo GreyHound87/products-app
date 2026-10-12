@@ -22,50 +22,53 @@ const PublicRoute = () => {
   return <Outlet />
 }
 
-const router = createBrowserRouter([
-  {
-    id: 'root',
-    Component: RootLayout,
-    errorElement: <RouteErrorFallback title='Ошибка приложения' />,
-    children: [
-      {
-        path: '/',
-        element: <Navigate to='/products' replace />,
-      },
-      {
-        Component: PublicRoute,
-        children: [
-          {
-            path: '/login',
-            lazy: () => import('@/pages/LoginPage'),
-            errorElement: <RouteErrorFallback title='Ошибка входа' />,
-          },
-        ],
-      },
-      {
-        Component: PrivateRoute,
-        children: [
-          {
-            lazy: () => import('@/app/layouts/appLayoutRoute'),
-            errorElement: <RouteErrorFallback title='Ошибка раздела' />,
-            children: [
-              {
-                path: '/products',
-                lazy: () => import('@/pages/ProductsPage'),
-                errorElement: <RouteErrorFallback title='Ошибка каталога товаров' />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: '*',
-        lazy: () => import('@/pages/NotFoundPage'),
-        errorElement: <RouteErrorFallback title='Ошибка страницы' />,
-      },
-    ],
-  },
-])
+const router = createBrowserRouter(
+  [
+    {
+      id: 'root',
+      Component: RootLayout,
+      errorElement: <RouteErrorFallback title='Ошибка приложения' />,
+      children: [
+        {
+          path: '/',
+          element: <Navigate to='/products' replace />,
+        },
+        {
+          Component: PublicRoute,
+          children: [
+            {
+              path: '/login',
+              lazy: () => import('@/pages/LoginPage'),
+              errorElement: <RouteErrorFallback title='Ошибка входа' />,
+            },
+          ],
+        },
+        {
+          Component: PrivateRoute,
+          children: [
+            {
+              lazy: () => import('@/app/layouts/appLayoutRoute'),
+              errorElement: <RouteErrorFallback title='Ошибка раздела' />,
+              children: [
+                {
+                  path: '/products',
+                  lazy: () => import('@/pages/ProductsPage'),
+                  errorElement: <RouteErrorFallback title='Ошибка каталога товаров' />,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: '*',
+          lazy: () => import('@/pages/NotFoundPage'),
+          errorElement: <RouteErrorFallback title='Ошибка страницы' />,
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL },
+)
 
 export const AppRouterProvider = () => {
   return <RouterProvider router={router} />
